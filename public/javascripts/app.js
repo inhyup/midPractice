@@ -1,52 +1,63 @@
-angular.moduel('voting', []).controller('MainCtrl', ['$scope', '$http', function($scope, $http) {
+angular.module('voting', [])
+.controller('MainCtrl', [
+  '$scope', '$http',
+  function($scope, $http) {
     
     $scope.ballots = [];
     $scope.candidates = [];
 
     $scope.getAll = function() {
-        return $http.get('/voting').success(function(data) {
-            angular.copy(data, $scope.candidates);
-        });
+      return $http.get('/voting').success(function(data) {
+        angular.copy(data, $scope.candidates);
+      });
     };
 
     $scope.getAll();
 
     $scope.create = function(candidate) {
-        return $http.post('/voting', candidate).success(function(data) {
-            $scope.candidate.push(data);
-        });
+       return $http.post('/voting', candidate).success(function(data){
+	 $scope.candidates.push(data);
+       });
     };
 
     $scope.dovote = function() {
-        angular.forEach($scope.candidates, function(value, key) {
-            if(value.selected) {
-                $scope.upvote(value);
-                $scope.ballots.push(value);
-            };
-        });
+      console.log("in dovote");
+      angular.forEach($scope.candidates, function(value, key) {
+        if(value.selected) {
+          $scope.upvote(value);
+          console.log(value);
+	  $scope.ballots.push(value);
+        };
+      });
     }
 
     $scope.upvote = function(candidate) {
-        return $http.put('/voting/' + candidate._id + '/upvote').success(function(data) {
-            candidate.votes += 1;
-        });
+      return $http.put('/voting/'+candidate._id+'/upvote')
+      .success(function(data) {
+        console.log("upvote worked");
+        candidate.votes += 1;
+      });
     }
 
     $scope.addCandidate = function() {
-        var newCandidate = {name:$scope.formContent, votes: 0};
-        $scope.create(newCnadidate);
-        $scope.formContent = '';
+      var newCan = {name:$scope.formContent, votes: 0};
+      console.log(newCan);
+      $scope.create(newCan);
+      $scope.formContent = '';
     };
 
     $scope.incrementUpvotes = function(candidate) {
-        $scope.upvote(candidate);
+      $scope.upvote(candidate);
     };
 
     $scope.delete = function(candidate) {
-        $http.delete('/voting/' + candidate._id).success(function(data) {
-            console.log("delete success");
-        });
-        $scope.getAll();
-    };
+      console.log("in delete");
+      $http.delete('/voting/'+candidate._id)
+      .success(function(data) {
+        console.log("delete worked");
+      });
+      $scope.getAll();
+    };    
 
-}]);
+  }
+]);
