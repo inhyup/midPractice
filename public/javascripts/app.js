@@ -29,7 +29,7 @@ angular.module('voting', [])
 	  $scope.ballots.push(value);
         };
       });
-    }
+    };
 
     $scope.upvote = function(candidate) {
       return $http.put('/voting/'+candidate._id+'/upvote')
@@ -37,7 +37,7 @@ angular.module('voting', [])
         console.log("upvote worked");
         candidate.votes += 1;
       });
-    }
+    };
 
     $scope.addCandidate = function() {
       var newCan = {name:$scope.formContent, votes: 0};
