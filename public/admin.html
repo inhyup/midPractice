@@ -19,7 +19,7 @@
         <h1>Current Candidates</h1>
 
         <div ng-repeat="candidate in candidates | orderBy: '-votes'">
-            <span class="glyphicon glyphicons-remove" ng-click="delete(candidate)"></span>
+            <span class="glyphicon glyphicon-remove" ng-click="delete(candidate)"></span>
             {{candidate.name}} - votes {{candidate.votes}}
         </div>
     </body>
