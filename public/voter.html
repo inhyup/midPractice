@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <title> Voter Interface </title>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
+        <script src="javascripts/app.js"></script>
+    </head>
+
+    <body ng-app="voting" ng-controller="MainCtrl">
+    
+        <h1> Voter Interface </h1>
+    
+        <h1> Current Candidates </h1>
+
+        <div ng-repeat="candidate in candidates | orderBy: '-name'">
+            <input type="checkbox" ng-model="candidate.selected"> {{candidate.name}}
+        </div>
+        
+        <button ng-click="dovote()">Submit Votes</button>
+    
+        <h1> Submitted Ballot </h1>
+        <div ng-repeat="candidate in ballots | orderBy: '-name'">
+            {{candidate.name}}
+        </div>
+    
+    </body>
+</html>
